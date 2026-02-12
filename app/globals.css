@@ -1,0 +1,112 @@
+:root {
+  color-scheme: dark;
+  font-family: Inter, Segoe UI, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #0a0f1b;
+  color: #e8ecff;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  min-height: 100vh;
+}
+
+.panel {
+  padding: 16px;
+  border-right: 1px solid #1f2a44;
+  background: #0f1728;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+.panel label {
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.panel input,
+.panel textarea,
+.panel select,
+.panel button {
+  background: #111c30;
+  border: 1px solid #31415f;
+  color: #e8ecff;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.panel button {
+  cursor: pointer;
+}
+
+.panel button:focus-visible,
+.panel input:focus-visible,
+.panel textarea:focus-visible,
+.panel select:focus-visible,
+a:focus-visible {
+  outline: 2px solid #6da5ff;
+  outline-offset: 2px;
+}
+
+.muted {
+  color: #97a5c4;
+  margin-top: -8px;
+}
+
+.map-wrap {
+  position: relative;
+}
+
+.loading {
+  position: absolute;
+  z-index: 500;
+  top: 16px;
+  left: 16px;
+  background: rgba(0, 0, 0, 0.65);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.health {
+  margin-top: 4px;
+  border-top: 1px solid #283957;
+  padding-top: 10px;
+}
+
+.error {
+  color: #ff8da1;
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: #0f1728;
+  color: #e8ecff;
+}
+
+.leaflet-popup-content ul {
+  margin: 8px 0;
+  padding-left: 18px;
+}
+
+@media (max-width: 900px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    border-right: none;
+    border-bottom: 1px solid #1f2a44;
+  }
+}
