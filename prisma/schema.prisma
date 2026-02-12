@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model QueryProfile {
+  id          String      @id @default(cuid())
+  name        String      @unique
+  queryString String
+  timespan    String
+  filtersJson Json
+  createdAt   DateTime    @default(now())
+  geoClusters GeoCluster[]
+  articles    Article[]
+  ingestRuns  IngestRun[]
+}
+
+model GeoCluster {
+  id             String       @id @default(cuid())
+  queryProfileId String
+  locationKey    String
+  name           String?
+  lat            Float
+  lon            Float
+  count          Int          @default(0)
+  updatedAt      DateTime     @updatedAt
+  queryProfile   QueryProfile @relation(fields: [queryProfileId], references: [id], onDelete: Cascade)
+
+  @@index([queryProfileId, updatedAt])
+  @@unique([locationKey, queryProfileId])
+}
+
+model Article {
+  id             String       @id @default(cuid())
+  queryProfileId String
+  title          String
+  url            String       @unique
+  sourceCountry  String?
+  language       String?
+  publishedAt    DateTime?
+  locationKey    String?
+  createdAt      DateTime     @default(now())
+  queryProfile   QueryProfile @relation(fields: [queryProfileId], references: [id], onDelete: Cascade)
+
+  @@index([queryProfileId, createdAt])
+}
+
+model IngestRun {
+  id             String       @id @default(cuid())
+  queryProfileId String
+  startedAt      DateTime     @default(now())
+  finishedAt     DateTime?
+  status         String
+  errorText      String?
+  queryProfile   QueryProfile @relation(fields: [queryProfileId], references: [id], onDelete: Cascade)
+
+  @@index([queryProfileId, startedAt])
+}
